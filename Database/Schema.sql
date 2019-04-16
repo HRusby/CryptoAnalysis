@@ -41,6 +41,10 @@ CREATE TABLE USER (
   PortfolioId Integer -- ID of User portfolio
 );
 
-CREATE TABLE PORTFOLIO(
-  
+CREATE TABLE PORTFOLIO_OVERVIEW(
+  PortfolioId Integer, -- Portfolio Identifier
+  UserId Integer, -- User Associated
+  Current#Currencies Integer, -- Total Number of Currencies invested in
+  TotalInvestment Double Precision, -- Total Investiture
+  NetProfit Double Precision -- Net gain/loss
 );
