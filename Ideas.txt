@@ -1,0 +1,53 @@
+1) SetUp
+  Retrieve list of available cryptocurrencies from markets
+
+  1.1) Settings
+      XML Consisting of Currencies, Active: t/f, brokerages, markets present on
+
+  1.2) Confirming Trust
+    If no trusted markets/brokerages compare rates across multiple
+    If some trusted markets/brokerages compare rates to trusted sites
+
+2) Standard Functionality
+  On Run, for each currency in portfolio analyse current rates, store date. If dropping send alert, if rising send alert if > 5%.
+  Repeat every half hour (Perhaps make configurable)
+
+3) Data Storage
+  SQL
+    Tables:
+      Currency Identity Table
+        CurrencyId
+        Currency ShortName
+        Currency Name
+      Currency History
+        CurrencyId
+        TmStamp
+        Value
+        %Change
+        Volatility
+      Currency Value Table
+        CurrencyId
+        CurrentValue
+        Trend
+      Trend Tables
+        TrendId
+        TrendDescriptor (Sharp Up/Down, Steady Up/Down, Marginal Up/Down, Steady)
+      Volatility
+        VolatilityId
+        Descriptor
+        MinChangePerDay
+        MinDaysToClassify
+4) Portfolio
+  user Selects Currency, Amount currently possessed
+  User inserts buy/sell amounts
+  Summary of current value of each currency and total.
+  Summary of Invested Equity and Estimated Worth
+
+4.1) Suggestions
+  Based on Market trends of each currency make suggestions of investments to markets
+  Requires a lot of research and investment to make viable
+
+
+Exchanges: Kraken, CoinBase, BitStamp, Itbit
+
+API For market data: https://min-api.cryptocompare.com/documentation?key=Price&cat=multipleSymbolsFullPriceEndpoint
