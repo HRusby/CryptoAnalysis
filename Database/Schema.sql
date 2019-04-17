@@ -1,12 +1,20 @@
-CREATE TABLE CURRENCY_IDENTITY (
+CREATE TABLE CURRENCY (
   CurrencyId Integer PRIMARY KEY, -- Identifier
   CurrencyShortName VarChar NOT NULL UNIQUE, -- Currency Market ShortName (e.g. BTC) -- INDEXED
   CurrencyName VarChar NOT NULL UNIQUE, -- Currency Full Name (e.g. BitCoin) -- INDEXED
   CurrencyValue Double Precision, -- Current Value
   Trend Integer, -- Current Trend as per Trend_Identity -- INDEXED
   Volatility Integer, -- Current Volatility as per VOLATILITY_IDENTITY
+  PatternShort Integer, -- ShortTerm Pattern (Weekly)
+  PatternMedium Integer, -- MidTerm Pattern (Monthly)
+  PatternLong Integer, -- Long Term Pattern (Yearly)
+  PatternHistoric Integer, -- Historic Pattern (All Time)
   FOREIGN KEY (Trend) REFERENCES TREND_IDENTITY(TrendId),
-  FOREIGN KEY (Volatility) REFERENCES VOLATILITY_IDENTITY(VolatilityId)
+  FOREIGN KEY (Volatility) REFERENCES VOLATILITY_IDENTITY(VolatilityId),
+  FOREIGN KEY (PatternShort) REFERENCES PATTERN_IDENTITY(PatternId),
+  FOREIGN KEY (PatternMedium) REFERENCES PATTERN_IDENTITY(PatternId),
+  FOREIGN KEY (PatternLong) REFERENCES PATTERN_IDENTITY(PatternId),
+  FOREIGN KEY (PatternHistoric) REFERENCES PATTERN_IDENTITY(PatternId)
 );
 
 CREATE TABLE CURRENCY_HISTORY (
@@ -18,6 +26,12 @@ CREATE TABLE CURRENCY_HISTORY (
   Volatility Integer, -- Volatility at the point in time calculated (As per VOLATILITY_IDENTITY)
   FOREIGN KEY(CurrencyId) REFERENCES CURRENCY_IDENTITY(CurrencyId),
   FOREIGN KEY(Volatility) REFERENCES VOLATILITY_IDENTITY(VolatilityId)
+);
+
+CREATE TABLE PATTERN_IDENTITY(
+  PatternId Integer PRIMARY KEY, -- Identifier
+  Name Varchar, -- Pattern Name
+  Descriptor Varchar -- Natural Language Description of this pattern
 );
 
 CREATE TABLE TREND_IDENTITY (
@@ -65,4 +79,16 @@ CREATE TABLE PORTFOLIO_OVERVIEW(
   TotalInvestment Double Precision, -- Total Investiture
   NetProfit Double Precision, -- Net gain/loss
   FOREIGN KEY (UserId) REFERENCES USER(UserId)
+);
+
+CREATE TABLE PORTFOLIO_LOGS(
+  LogId Integer PRIMARY KEY, -- Log Identifier
+  PortfolioId Integer, -- Foreign Key references associated portfolio
+  Currency Integer, -- ForeignKey References CurrencyId
+  Direction Varchar(3), -- True = In False = Out
+  Amount Double Precision, -- Amount of currency bought
+  Value Double Precision, -- Value of the amount bought
+  FOREIGN KEY (PortfolioID) REFERENCES PORTFOLIO_OVERVIEW(PortfolioId),
+  FOREIGN KEY (Currency) REFERENCES CURRENCY(CurrencyId),
+  CONSTRAINT CHECK (Direction = 'BUY' OR Direction = 'SELL')
 );
