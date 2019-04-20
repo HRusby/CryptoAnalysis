@@ -1,8 +1,10 @@
 CREATE TABLE CURRENCY (
   CurrencyId Integer PRIMARY KEY, -- Identifier
-  CurrencyShortName VarChar NOT NULL UNIQUE, -- Currency Market ShortName (e.g. BTC) -- INDEXED
-  CurrencyName VarChar NOT NULL UNIQUE, -- Currency Full Name (e.g. BitCoin) -- INDEXED
+  CurrencySymbol VarChar NOT NULL UNIQUE, -- Currency Market ShortName (e.g. BTC) -- INDEXED
+  CurrencyName VarChar NOT NULL, -- Currency Full Name (e.g. BitCoin) -- INDEXED
   CurrencyValue Double Precision, -- Current Value
+  TotalSupply INTEGER,
+  IsTrading Boolean,
   Trend Integer, -- Current Trend as per Trend_Identity -- INDEXED
   Volatility Integer, -- Current Volatility as per VOLATILITY_IDENTITY
   FOREIGN KEY (Trend) REFERENCES TREND_IDENTITY(TrendId),

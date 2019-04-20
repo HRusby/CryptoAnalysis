@@ -47,7 +47,11 @@
   Based on Market trends of each currency make suggestions of investments to markets
   Requires a lot of research and investment to make viable
 
+C# Front End Linked to Python for data analysis / cmd implementation
 
 Exchanges: Kraken, CoinBase, BitStamp, Itbit
 
 API For market data: https://min-api.cryptocompare.com/documentation?key=Price&cat=multipleSymbolsFullPriceEndpoint
+
+Get All Currencies (and current value):
+  https://min-api.cryptocompare.com/data/all/coinlist
